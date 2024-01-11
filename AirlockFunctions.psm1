@@ -89,7 +89,7 @@ function Add-HashesToApplicationCapture {
         [string[]]$SHA256Hashes
     )
     $Body = @{
-        applicationid = $GroupID
+        applicationid = $ApplicationID
         hashes        = $PathRule
     } | ConvertTo-Json
 
