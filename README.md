@@ -3,6 +3,12 @@ This is a set of scripts to help with onboarding and maintenance of an Airlock D
 
 All scripts will attempt to load your Airlock URL and API key from `airlockconfig.conf`, and will accept the URL and key as parameters or prompt if they're missing.
 
+
+## Optional Setup
+1. Copy `airlockconfig-example.conf` to `airlockconfig.conf
+2. Fill in your API key and Airlock instance URL. Note that the API port may be different from the UI port (eg `3129`)
+
+
 ## `GetAllPathRules.ps1`
 Outputs a set of text files containing all path rules for all policy groups
 
