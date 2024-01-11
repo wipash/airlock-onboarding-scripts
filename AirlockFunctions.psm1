@@ -90,7 +90,7 @@ function Add-HashesToApplicationCapture {
     )
     $Body = @{
         applicationid = $ApplicationID
-        hashes        = $PathRule
+        hashes        = $SHA256Hashes
     } | ConvertTo-Json
 
     Write-Verbose "Adding hash list to application capture $ApplicationID"
