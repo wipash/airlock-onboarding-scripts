@@ -35,7 +35,7 @@ Get-Config -APIKey $APIKey -AirlockURL $AirlockURL
 $Groups = Get-GroupTreeFromAirlock -Verbose:($VerbosePreference -eq 'Continue')
 
 $Groups | ForEach-Object {
-    $Rules = @(Get-GroupRulesFromAirlock -GroupId $_.ID -Verbose:($VerbosePreference -eq 'Continue'))
+    $Rules = Get-GroupRulesFromAirlock -GroupId $_.ID -Verbose:($VerbosePreference -eq 'Continue')
     $Paths = $Rules.Paths
     if ($Paths.Count -ne 0) {
         $Paths | Out-File -Path "$OutputDirectory\PathRules-$($_.Name).txt" -Force

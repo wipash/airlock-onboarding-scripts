@@ -121,17 +121,24 @@ function Get-GroupRulesFromAirlock {
     $Result = Invoke-AirlockAPICall -Endpoint '/v1/group/policies' -Body $body
 
     if ($null -eq $Result.response.paths) {
-        return @()
+        $Paths = @()
     }
-    $Paths = $Result.response.paths | ForEach-Object {
-        $_.name -replace '\\\\', '\'
+    else {
+        $Paths = $Result.response.paths | ForEach-Object {
+            $_.name -replace '\\\\', '\'
+        }
     }
-    $Publishers = $Result.response.publishers | ForEach-Object {
-        $_.name
+    if ($null -eq $Result.response.publishers) {
+        $Publishers = @()
+    }
+    else {
+        $Publishers = $Result.response.publishers | ForEach-Object {
+            $_.name
+        }
     }
 
-    $Paths = $Paths | Sort-Object
-    $Publishers = $Publishers | Sort-Object
+    $Paths = @($Paths | Sort-Object)
+    $Publishers = @($Publishers | Sort-Object)
 
     return [PSCustomObject]@{
         'Paths'      = $Paths
@@ -273,10 +280,10 @@ function Get-CleanPathRule {
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [string]$PathRule
     )
-    begin{
+    begin {
         $PathRules = @()
     }
-    process{
+    process {
         # If you copied and pasted paths direct from Airlock, you probably copied a bunch of zero-width space characters too.
         # This removes them. See: https://stackoverflow.com/a/68328388
         $PathRule = $PathRule.Trim() -creplace '\P{IsBasicLatin}'
@@ -289,7 +296,7 @@ function Get-CleanPathRule {
             $PathRules += $PathRule
         }
     }
-    end{
+    end {
         if ($PathRules.Count -eq 1) {
             return $PathRules[0]
         }
