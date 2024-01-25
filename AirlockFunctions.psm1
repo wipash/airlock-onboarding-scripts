@@ -328,12 +328,12 @@ function Get-GroupPathRulesFromFileContent {
     $ReturnPaths = $null
 
     foreach ($Path in $PathList) {
-        if ($Path -match "^## $Identifier") {
+        if ($Path.Trim() -match "^## $Identifier$") {
             $ReturnPaths = @(' ')
             continue
         }
         elseif ($ReturnPaths) {
-            if ($Path -match '^##') {
+            if ($Path.Trim() -match '^##') {
                 break
             }
             $CleanPathRule = Get-CleanPathRule -PathRule $Path
