@@ -48,6 +48,7 @@ $Groups | ForEach-Object {
     $PathRules[$ID] = @(Get-GroupPathRulesFromFileContent -PathList $PathFileContent -Identifier $Name | Where-Object {$_})
     if ($PathRules[$ID].Count -gt 0) {
         Write-Host -ForegroundColor Green "$($PathRules[$ID].Count) $($Name) paths"
+        Write-Verbose "`n$($PathRules[$ID] -join "`n")"
     }
 }
 
